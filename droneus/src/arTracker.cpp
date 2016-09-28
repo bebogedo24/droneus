@@ -12,17 +12,19 @@
 #include <tf/transform_datatypes.h>
 #include <ar_track_alvar_msgs/AlvarMarkers.h>
 #include <ar_track_alvar_msgs/AlvarMarker.h>
-#include <vector>
 
 
 /* Where I left off:
  * Try changing .launch
- *
+ * find out topic of bebop driver
+ * Calibrate camera using opencv node
+ * Run tests between each step, getting large amounts of measurements quickly
+ *  
  */
 
 
 
-void poseCb(ar_track_alvar_msgs::AlvarMarkers msg) {
+void poseCb(ar_track_alvar_msgs::AlvarMarkers msg) { //no control over loop rate and which tags are detected, innefecient 
 
 	for (ar_track_alvar_msgs::AlvarMarker tag : msg.markers) {
 		if (tag.id != 0)
@@ -49,11 +51,6 @@ int main(int argc, char** argv)
 	ros::init(argc, argv, "arTracker");
 	ros::NodeHandle n;
 
-	//ros::Subscriber pose_sub = n.subscribe("ar_pose_marker", 1000, poseCb);
-
-
-	//ros::spin();
-
 	tf::TransformListener listener;
 	ros::Rate loop_rate(1);
 	 while (ros::ok()){
@@ -61,6 +58,7 @@ int main(int argc, char** argv)
 	    tf::StampedTransform transformCamera;
 	    try{
 	      listener.lookupTransform( "/ar_marker_30","/base_link",ros::Time(0), transformBase);
+	      listener.lookupTransform( "/ar_marker_30","/camera_base_link",ros::Time(0), transformCamera);
 	    }
 	    catch (tf::TransformException& ex){
 	      ROS_ERROR("%s",ex.what());;
@@ -69,6 +67,12 @@ int main(int argc, char** argv)
 	    }
 	    std::cout << "Base x: "<< transformBase.getOrigin().x() << std::endl;
 	    std::cout << "Base y: "<< transformBase.getOrigin().y() << std::endl;
+	    std::cout << "Base z: "<< transformBase.getOrigin().z() << std::endl;
+	    
+	    std::cout << "Camera y: "<< transformBase.getOrigin().x() << std::endl;
+	    std::cout << "Camera y: "<< transformBase.getOrigin().y() << std::endl;
+	    std::cout << "Camera y: "<< transformBase.getOrigin().z() << std::endl;
+	    
 	    loop_rate.sleep();
 
 	 }
