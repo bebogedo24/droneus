@@ -24,7 +24,7 @@
 
 
 
-void poseCb(ar_track_alvar_msgs::AlvarMarkers msg) { //no control over loop rate and which tags are detected, innefecient 
+void poseCb(ar_track_alvar_msgs::AlvarMarkers msg) { //no control over loop rate and which tags are detected, inneficient 
 
 	for (ar_track_alvar_msgs::AlvarMarker tag : msg.markers) {
 		if (tag.id != 0)
