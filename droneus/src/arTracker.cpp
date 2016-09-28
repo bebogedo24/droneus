@@ -69,9 +69,9 @@ int main(int argc, char** argv)
 	    std::cout << "Base y: "<< transformBase.getOrigin().y() << std::endl;
 	    std::cout << "Base z: "<< transformBase.getOrigin().z() << std::endl;
 	    
-	    std::cout << "Camera y: "<< transformBase.getOrigin().x() << std::endl;
+	    std::cout << "Camera x: "<< transformBase.getOrigin().x() << std::endl;
 	    std::cout << "Camera y: "<< transformBase.getOrigin().y() << std::endl;
-	    std::cout << "Camera y: "<< transformBase.getOrigin().z() << std::endl;
+	    std::cout << "Camera z: "<< transformBase.getOrigin().z() << std::endl;
 	    
 	    loop_rate.sleep();
 
